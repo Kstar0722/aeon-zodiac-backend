@@ -16,7 +16,10 @@ const sendOtp = async (req, res) => {
   try {
     const result = await client.verify.v2
       .services(TWILIO_SERVICE_SID)
-      .verifications.create({ to: phoneNumber.replace(/ /g, ''), channel: "sms" })
+      .verifications.create({
+        to: phoneNumber.replace(/ /g, ""),
+        channel: "sms",
+      })
       .then((verification) => verification.status);
 
     // console.log(phoneNumber);
@@ -36,24 +39,25 @@ const sendOtp = async (req, res) => {
 
 const sendEmailOtp = async (req, res) => {
   const { email } = req.body;
-  const code1 = 1111;
+  console.log("email :", email);
+  // const code1 = 1111;
   const user1 = await Otp.findOne({ userid: email });
-  if (user1) {
-    user1.code = code1;
-    user1.save();
-  } else {
-    const user = new Otp();
-    user.userid = email;
-    user.code = code1;
-    user.save();
-  }
-  res.status(200).send({
-    success: true,
-    message: `OTP sent successfully`,
-    payload: "success",
-  });
+  // if (user1) {
+  //   user1.code = code1;
+  //   user1.save();
+  // } else {
+  //   const user = new Otp();
+  //   user.userid = email;
+  //   user.code = code1;
+  //   user.save();
+  // }
+  // res.status(200).send({
+  //   success: true,
+  //   message: `OTP sent successfully`,
+  //   payload: "success",
+  // });
   console.log("Email sent");
-  return "Email sent";
+  // return "Email sent";
 
   const user = await User.findOne({ email });
   let username = email.split("@")[0];
@@ -100,7 +104,9 @@ const sendEmailOtp = async (req, res) => {
                   <div style="padding: 20px; background-color: rgb(255, 255, 255);">
                     <div style="color: rgb(0, 0, 0); text-align: left;">
                       <h1 style="margin: 1rem 0">Hello, ${
-                        username ? username[0]?.toUpperCase() + username?.substring(1) : 'User'
+                        username
+                          ? username[0]?.toUpperCase() + username?.substring(1)
+                          : "User"
                       }</h1>
                       <p style="padding-bottom: 16px">Please use the verification code below to sign in.</p>
                       <p style="padding-bottom: 16px"><strong style="font-size: 130%">${code}</strong></p>
