@@ -15,7 +15,7 @@ const horoscopeRouter = require("./routes/horoscope.routes");
 const stripeRouter = require("./routes/stripe.routes");
 
 const app = express();
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 2002;
 
 app.use(
   cors({
